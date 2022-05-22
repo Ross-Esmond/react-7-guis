@@ -1,22 +1,32 @@
-import { useState } from 'react'
+import { useState, useId } from 'react'
+import useInput from './useInput.js'
 
-let lastId = 0
 export default function TemperatureConverter ({}) {
-    const id = useState(lastId++)
-    const [temp, setTemp] = useState({ value: '0', type: 'c' })
+    const id = useId()
+    const [temp, setTemp] = useState(0)
+    const [celsius, setCelsius] = useInput(
+        temp, t => setTemp(t),
+        t => t.toString(),
+        c => parseFloat(c)
+    )
+    const [fahrenheit, setFahrenheit] = useInput(
+        celsius, c => setCelsius(c),
+        c => Math.round(parseFloat(c)*(9/5) + 32).toString(),
+        f => Math.round((parseFloat(f) - 32) * (5/9)).toString()
+    )
 
     return (
         <div>
             <input type="text"
                 id={`celsius-${id}`}
-                value={temp.type === 'c' ? temp.value : Math.round((parseInt(temp.value)-32)*(5/9))}
-                onChange={(ev) => setTemp({ value: ev.target.value, type: 'c' })}
+                value={celsius}
+                onChange={(ev) => setCelsius(ev.target.value)}
             />
             <label htmlFor={`celsius-${id}`}>Celsius</label>
             <input type="text"
                 id={`fahrenheit-${id}`}
-                value={temp.type === 'f' ? temp.value : Math.round(parseInt(temp.value)*(9/5) + 32)}
-                onChange={(ev) => setTemp({ value: ev.target.value, type: 'f' })}
+                value={fahrenheit}
+                onChange={(ev) => setFahrenheit(ev.target.value)}
             />
             <label htmlFor={`fahrenheit-${id}`}>Fahrenheit</label>
         </div>

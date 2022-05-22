@@ -39,3 +39,15 @@ test('Temperature Converter to convert fahrenheit to celsius', async () => {
     expect(screen.getByLabelText('Celsius').value).toBe('21')
 })
 
+test('Temperature Converter to convert celsius to celsius', async () => {
+    const counter = render(<TemperatureConverter />)
+    fireEvent.change(screen.getByLabelText('Celsius'), { target: { value: '20.0' } })
+    expect(screen.getByLabelText('Celsius').value).toBe('20.0')
+})
+
+test('Temperature Converter to convert fahrenheit to fahrenheit', async () => {
+    const counter = render(<TemperatureConverter />)
+    fireEvent.change(screen.getByLabelText('Fahrenheit'), { target: { value: '70.0' } })
+    expect(screen.getByLabelText('Fahrenheit').value).toBe('70.0')
+})
+
