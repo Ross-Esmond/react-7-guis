@@ -6,7 +6,7 @@ export default function Counter ({}) {
     return (
         <div>
             <span data-testid="display">{ count }</span>
-            <button>Count</button>
+            <button onClick={() => setCount(c => c + 1)}>Count</button>
         </div>
     )
 }

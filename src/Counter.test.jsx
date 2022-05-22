@@ -10,3 +10,11 @@ test('Counter starts by displaying 0', async () => {
 
     expect(screen.getByTestId('display')).toHaveTextContent('0')
 })
+
+test('Counter counts up from 0', async () => {
+    const counter = render(<Counter />)
+
+    fireEvent.click(screen.getByText('Count'))
+
+    expect(screen.getByTestId('display')).toHaveTextContent('1')
+})
