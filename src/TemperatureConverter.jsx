@@ -6,12 +6,12 @@ export default function TemperatureConverter ({}) {
     const [temp, setTemp] = useState(0)
     const [celsius, setCelsius] = useInput(
         temp, t => setTemp(t),
-        (t, s) => isNaN(t) ? s : t.toString(),
+        t => isNaN(t) ? '' : t.toString(),
         c => parseFloat(c)
     )
     const [fahrenheit, setFahrenheit] = useInput(
         temp, t => setTemp(t),
-        (t, s) => isNaN(t) ? s : Math.round(t*(9/5) + 32).toString(),
+        t => isNaN(t) ? '' : Math.round(t*(9/5) + 32).toString(),
         f => Math.round((parseFloat(f) - 32) * (5/9))
     )
 
