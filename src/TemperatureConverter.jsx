@@ -16,19 +16,23 @@ export default function TemperatureConverter ({}) {
     )
 
     return (
-        <div>
-            <input type="text"
-                id={`celsius-${id}`}
-                value={celsius}
-                onChange={(ev) => setCelsius(ev.target.value)}
-            />
-            <label htmlFor={`celsius-${id}`}>Celsius</label>
-            <input type="text"
-                id={`fahrenheit-${id}`}
-                value={fahrenheit}
-                onChange={(ev) => setFahrenheit(ev.target.value)}
-            />
-            <label htmlFor={`fahrenheit-${id}`}>Fahrenheit</label>
+        <div style={{ display: 'flex', background: 'lightgrey', padding: '10px', gap: '10px' }}>
+            <div>
+                <label htmlFor={`celsius-${id}`}>Celsius</label>&nbsp;
+                <input type="number"
+                    id={`celsius-${id}`}
+                    value={celsius}
+                    onChange={(ev) => setCelsius(ev.target.value)}
+                />
+            </div>
+            <div>
+                <label htmlFor={`fahrenheit-${id}`}>Fahrenheit</label>&nbsp;
+                <input type="number"
+                    id={`fahrenheit-${id}`}
+                    value={fahrenheit}
+                    onChange={(ev) => setFahrenheit(ev.target.value)}
+                />
+            </div>
         </div>
     )
 }
