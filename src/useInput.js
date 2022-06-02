@@ -1,32 +1,31 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 function shouldRetainPriorInput({ state, parsed }, high) {
     if (state === 'error') return true
     if (high === parsed) return true
-    if (isNaN(parsed) && isNaN(high)) return true
+    if (typeof parsed === 'number' && typeof high === 'number' && isNaN(parsed) && isNaN(high)) return true
 }
 
 export default function useInput(high, onChange, display, parse) {
     const cache = useRef({
         state: 'parsed',
-        parsed: high,
-        low: display(high)
+        parsed: high
     })
+    const [low, setLow] = useState(display(high))
 
     function handleChange(low) {
+        setLow(low)
         let parsed = null
         try {
             parsed = parse(low)
             cache.current = {
                 state: 'parsed',
-                parsed,
-                low
+                parsed
             }
         } catch (err) {
             console.error(`The parser for the input you just edited threw an error with input ${low}.`)
             cache.current = {
-                state: 'error',
-                low
+                state: 'error'
             }
         } finally {
             onChange(parsed)
@@ -34,7 +33,7 @@ export default function useInput(high, onChange, display, parse) {
     }
 
     if (shouldRetainPriorInput(cache.current, high)) {
-        return [cache.current.low, handleChange]
+        return [low, handleChange]
     } else {
         return [display(high), handleChange]
     }

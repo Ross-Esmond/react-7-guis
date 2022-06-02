@@ -1,6 +1,6 @@
 import React from 'react'
 import TemperatureConverter from './TemperatureConverter.jsx'
-import {render, fireEvent, waitFor, screen} from '@testing-library/react'
+import {render, fireEvent, waitFor, screen, act} from '@testing-library/react'
 import '@testing-library/jest-dom'
 
 test('Temperature Converter to default to 0', async () => {
@@ -49,5 +49,20 @@ test('Temperature Converter to convert fahrenheit to fahrenheit', async () => {
     const counter = render(<TemperatureConverter />)
     fireEvent.change(screen.getByLabelText('Fahrenheit'), { target: { value: '70.0' } })
     expect(screen.getByLabelText('Fahrenheit').value).toBe('70.0')
+})
+
+
+test('Temperature Converter allows for the conversion of F35 to F36', async () => {
+    const counter = render(<TemperatureConverter />)
+    act(() => {
+        fireEvent.change(screen.getByLabelText('Fahrenheit'), { target: { value: '33' } })
+    })
+    expect(screen.getByLabelText('Fahrenheit').value).toBe('33')
+    act(() => {
+        fireEvent.change(screen.getByLabelText('Fahrenheit'), { target: { value: '34' } })
+    })
+    await waitFor(() => {
+        expect(screen.getByLabelText('Fahrenheit').value).toBe('34')
+    })
 })
 
