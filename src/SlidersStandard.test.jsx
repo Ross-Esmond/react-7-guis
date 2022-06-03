@@ -1,5 +1,5 @@
 import React from 'react'
-import Sliders from './Sliders.jsx'
+import Sliders from './SlidersStandard.jsx'
 import {render, fireEvent, waitFor, screen, act} from '@testing-library/react'
 import '@testing-library/jest-dom'
 
