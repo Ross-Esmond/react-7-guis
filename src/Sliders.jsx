@@ -1,5 +1,5 @@
 import { useState, useId } from 'react'
-import { useLens } from './useInput.js'
+import useInput from './useInput.js'
 
 export function Slider({ label, onChange, value, ...props }) {
     const id = useId()
@@ -14,8 +14,8 @@ export function Slider({ label, onChange, value, ...props }) {
 
 export default function Sliders() {
     const [{ min, max }, setVolumns] = useState({ max: 7, min: 3 })
-    const [getMin, setMin] = useLens(({ max, min }) => Math.min(max, min), min => ({ max, min }))
-    const [getMax, setMax] = useLens(({ max, min }) => Math.max(max, min), max => ({ max, min }))
+    const [getMin, setMin] = useInput(({ max, min }) => Math.min(max, min), min => ({ max, min }))
+    const [getMax, setMax] = useInput(({ max, min }) => Math.max(max, min), max => ({ max, min }))
 
     return (
         <div style={{ display: "grid" }}>

@@ -1,14 +1,14 @@
 import { useState, useId } from 'react'
-import { useLens } from './useInput.js'
+import useInput from './useInput.js'
 
 export default function TemperatureConverter ({}) {
     const id = useId()
     const [temp, setTemp] = useState(0)
-    const [getCelsius, setCelsius] = useLens(
+    const [getCelsius, setCelsius] = useInput(
         t => isNaN(t) ? '' : t.toString(),
         c => parseFloat(c)
     )
-    const [getFahrenheit, setFahrenheit] = useLens(
+    const [getFahrenheit, setFahrenheit] = useInput(
         t => isNaN(t) ? '' : Math.round(t*(9/5) + 32).toString(),
         f => Math.round((parseFloat(f) - 32) * (5/9))
     )
