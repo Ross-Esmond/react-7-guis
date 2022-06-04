@@ -1,5 +1,5 @@
 import { useState, useId } from 'react'
-import useInput from './useInput.js'
+import { useLens } from './useInput.js'
 
 export function Slider({ label, onChange, value, ...props }) {
     const id = useId()
@@ -13,14 +13,14 @@ export function Slider({ label, onChange, value, ...props }) {
 }
 
 export default function Sliders() {
-    const [volumns, setVolumns] = useState({ m: 7, p: 3 })
-    const [high, setHigh] = useInput(volumns, setVolumns, vol => Math.max(vol.m, vol.p), val => ({ ...volumns, m: val }))
-    const [low, setLow] = useInput(volumns, setVolumns, vol => Math.min(vol.m, vol.p), val => ({ ...volumns, p: val }))
+    const [{ min, max }, setVolumns] = useState({ max: 7, min: 3 })
+    const [getMin, setMin] = useLens(({ max, min }) => Math.min(max, min), min => ({ max, min }))
+    const [getMax, setMax] = useLens(({ max, min }) => Math.max(max, min), max => ({ max, min }))
 
     return (
         <div style={{ display: "grid" }}>
-            <Slider label="High" min="0" max="10" value={high} onChange={setHigh} />
-            <Slider label="Low" min="0" max="10" value={low} onChange={setLow} />
+            <Slider label="Max" min="0" max="10" value={getMax({ min, max })} onChange={max => setVolumns(setMax(max))} />
+            <Slider label="Min" min="0" max="10" value={getMin({ min, max })} onChange={min => setVolumns(setMin(min))} />
         </div>
     )
 }
