@@ -1,14 +1,14 @@
 import { useState, useId } from 'react'
-import useInput from './useInput.js'
+import useAdapter from 'useadapter'
 
 export default function TemperatureConverter ({}) {
     const id = useId()
     const [temp, setTemp] = useState(0)
-    const [getCelsius, setCelsius] = useInput(
+    const [getCelsius, setCelsius] = useAdapter(
         t => isNaN(t) ? '' : t.toString(),
         c => parseFloat(c)
     )
-    const [getFahrenheit, setFahrenheit] = useInput(
+    const [getFahrenheit, setFahrenheit] = useAdapter(
         t => isNaN(t) ? '' : Math.round(t*(9/5) + 32).toString(),
         f => Math.round((parseFloat(f) - 32) * (5/9))
     )
